@@ -31,6 +31,16 @@ int8_t _z_new_link_udp_unicast(_z_link_t *zl, _z_endpoint_t ep);
 int8_t _z_endpoint_udp_multicast_valid(_z_endpoint_t *ep);
 int8_t _z_new_link_udp_multicast(_z_link_t *zl, _z_endpoint_t ep);
 #endif
+
+#if Z_FEATURE_LINK_CUSTOM_UNICAST == 1
+int8_t _z_endpoint_custom_unicast_valid(_z_endpoint_t *ep);
+int8_t _z_new_link_custom_unicast(_z_link_t *zl, _z_endpoint_t ep);
+#endif
+#if Z_FEATURE_LINK_CUSTOM_MULTICAST == 1
+int8_t _z_endpoint_custom_multicast_valid(_z_endpoint_t *ep);
+int8_t _z_new_link_custom_multicast(_z_link_t *zl, _z_endpoint_t ep);
+#endif
+
 #if Z_FEATURE_LINK_BLUETOOTH == 1
 int8_t _z_endpoint_bt_valid(_z_endpoint_t *ep);
 int8_t _z_new_link_bt(_z_link_t *zl, _z_endpoint_t ep);

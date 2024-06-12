@@ -39,6 +39,12 @@ int8_t _z_open_link(_z_link_t *zl, const char *locator) {
             ret = _z_new_link_udp_unicast(zl, ep);
         } else
 #endif
+#if Z_FEATURE_LINK_CUSTOM_UNICAST == 1
+            if (_z_endpoint_custom_unicast_valid(&ep) == _Z_RES_OK) {
+            ret = _z_new_link_custom_unicast(zl, ep);
+        } else
+#endif
+
 #if Z_FEATURE_LINK_BLUETOOTH == 1
             if (_z_endpoint_bt_valid(&ep) == _Z_RES_OK) {
             ret = _z_new_link_bt(zl, ep);
@@ -87,6 +93,13 @@ int8_t _z_listen_link(_z_link_t *zl, const char *locator) {
             ret = _z_new_link_udp_multicast(zl, ep);
         } else
 #endif
+
+#if Z_FEATURE_LINK_CUSTOM_MULTICAST == 1
+        if (_z_endpoint_custom_multicast_valid(&ep) == _Z_RES_OK) {
+            ret = _z_new_link_custom_multicast(zl, ep);
+        } else
+#endif
+
 #if Z_FEATURE_LINK_BLUETOOTH == 1
             if (_z_endpoint_bt_valid(&ep) == _Z_RES_OK) {
             ret = _z_new_link_bt(zl, ep);

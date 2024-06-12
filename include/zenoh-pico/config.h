@@ -183,6 +183,13 @@
 #endif
 
 /**
+ * Enable UDP Scouting.
+ */
+#ifndef Z_FEATURE_SCOUTING_CUSTOM
+#define Z_FEATURE_SCOUTING_CUSTOM 1
+#endif
+
+/**
  * Enable UDP Multicast links.
  */
 #ifndef Z_FEATURE_LINK_UDP_MULTICAST
@@ -195,6 +202,21 @@
 #ifndef Z_FEATURE_LINK_UDP_UNICAST
 #define Z_FEATURE_LINK_UDP_UNICAST 1
 #endif
+
+/**
+ * Enable UDP Multicast links.
+ */
+#ifndef Z_FEATURE_LINK_CUSTOM_MULTICAST
+#define Z_FEATURE_LINK_CUSTOM_MULTICAST 1
+#endif
+
+/**
+ * Enable UDP Unicast links.
+ */
+#ifndef Z_FEATURE_LINK_CUSTOM_UNICAST
+#define Z_FEATURE_LINK_CUSTOM_UNICAST 1
+#endif
+
 
 /**
  * Enable Multicast Transport.

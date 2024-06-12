@@ -28,6 +28,10 @@
 #include "zenoh-pico/system/link/udp.h"
 #endif
 
+#if Z_FEATURE_LINK_CUSTOM_UNICAST == 1 || Z_FEATURE_LINK_CUSTOM_MULTICAST == 1
+#include "zenoh-pico/system/link/custom.h"
+#endif
+
 #if Z_FEATURE_RAWETH_TRANSPORT == 1
 #include "zenoh-pico/system/link/raweth.h"
 #endif
@@ -108,6 +112,11 @@ typedef struct _z_link_t {
 #if Z_FEATURE_LINK_UDP_UNICAST == 1 || Z_FEATURE_LINK_UDP_MULTICAST == 1
         _z_udp_socket_t _udp;
 #endif
+
+#if Z_FEATURE_LINK_CUSTOM_UNICAST == 1 || Z_FEATURE_LINK_CUSTOM_MULTICAST == 1
+        _z_custom_socket_t _custom;
+#endif
+
 #if Z_FEATURE_LINK_BLUETOOTH == 1
         _z_bt_socket_t _bt;
 #endif
