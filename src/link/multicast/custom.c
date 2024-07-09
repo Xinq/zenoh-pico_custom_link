@@ -68,12 +68,11 @@ char *__z_parse_address_segment_custom_multicast(const char *address) {
             _z_str_n_copy(ret, p_start, len);
         }
     }
-
     return ret;
 }
 
 int8_t _z_endpoint_custom_multicast_valid(_z_endpoint_t *endpoint) {
-    int8_t ret = _Z_RES_OK;
+    int8_t ret = _Z_RES_OK;    
 
     if (_z_str_eq(endpoint->_locator._protocol, CUSTOM_SCHEMA) != true) {
         ret = _Z_ERR_CONFIG_LOCATOR_INVALID;
@@ -93,19 +92,18 @@ int8_t _z_endpoint_custom_multicast_valid(_z_endpoint_t *endpoint) {
         if (s_port == NULL) {
             ret = _Z_ERR_CONFIG_LOCATOR_INVALID;
         } else {
-            uint32_t port = strtoul(s_port, NULL, 10);
-            if ((port < (uint32_t)1) || (port > (uint32_t)65355)) {  // Port numbers should range from 1 to 65355
-                ret = _Z_ERR_CONFIG_LOCATOR_INVALID;
-            }
+            // uint32_t port = strtoul(s_port, NULL, 10);
+            // if ((port < (uint32_t)1) || (port > (uint32_t)65355)) {  // Port numbers should range from 1 to 65355
+            //     ret = _Z_ERR_CONFIG_LOCATOR_INVALID;
+            // }
             z_free(s_port);
         }
     }
 
     const char *iface = _z_str_intmap_get(&endpoint->_config, CUSTOM_CONFIG_IFACE_KEY);
     if (iface == NULL) {
-        ret = _Z_ERR_CONFIG_LOCATOR_INVALID;
+        // ret = _Z_ERR_CONFIG_LOCATOR_INVALID;
     }
-
     return ret;
 }
 
@@ -127,14 +125,12 @@ int8_t _z_f_link_open_custom_multicast(_z_link_t *self) {
 
 int8_t _z_f_link_listen_custom_multicast(_z_link_t *self) {
     int8_t ret = _Z_RES_OK;
-
     const char *iface = _z_str_intmap_get(&self->_endpoint._config, CUSTOM_CONFIG_IFACE_KEY);
     const char *join = _z_str_intmap_get(&self->_endpoint._config, CUSTOM_CONFIG_JOIN_KEY);
     ret = _z_listen_custom_multicast(&self->_socket._custom._sock, self->_socket._custom._rep, Z_CONFIG_SOCKET_TIMEOUT, iface,
                                   join);
-    ret |= _z_open_custom_multicast(&self->_socket._custom._msock, self->_socket._custom._rep, &self->_socket._custom._lep,
+    ret |= _z_open_custom_multicast(&self->_socket._custom._sock, self->_socket._custom._rep, &self->_socket._custom._lep,
                                  Z_CONFIG_SOCKET_TIMEOUT, iface);
-
     return ret;
 }
 
@@ -149,11 +145,11 @@ void _z_f_link_free_custom_multicast(_z_link_t *self) {
 }
 
 size_t _z_f_link_write_custom_multicast(const _z_link_t *self, const uint8_t *ptr, size_t len) {
-    return _z_send_custom_multicast(self->_socket._custom._msock, ptr, len, self->_socket._custom._rep);
+    return _z_send_custom_multicast(self->_socket._custom._sock, ptr, len, self->_socket._custom._rep);
 }
 
 size_t _z_f_link_write_all_custom_multicast(const _z_link_t *self, const uint8_t *ptr, size_t len) {
-    return _z_send_custom_multicast(self->_socket._custom._msock, ptr, len, self->_socket._custom._rep);
+    return _z_send_custom_multicast(self->_socket._custom._sock, ptr, len, self->_socket._custom._rep);
 }
 
 size_t _z_f_link_read_custom_multicast(const _z_link_t *self, uint8_t *ptr, size_t len, _z_bytes_t *addr) {
@@ -181,8 +177,8 @@ int8_t _z_new_link_custom_multicast(_z_link_t *zl, _z_endpoint_t endpoint) {
     zl->_endpoint = endpoint;
     char *s_address = __z_parse_address_segment_custom_multicast(endpoint._locator._address);
     char *s_port = __z_parse_port_segment_custom_multicast(endpoint._locator._address);
-    ret = _z_create_endpoint_custom(&zl->_socket._custom._rep, s_address, s_port);
-    memset(&zl->_socket._custom._lep, 0, sizeof(zl->_socket._custom._lep));
+    ret = _z_create_endpoint_custom(&zl->_socket._custom._sock, s_address, s_port);
+    // memset(&zl->_socket._custom._lep, 0, sizeof(zl->_socket._custom._lep));
     z_free(s_address);
     z_free(s_port);
 

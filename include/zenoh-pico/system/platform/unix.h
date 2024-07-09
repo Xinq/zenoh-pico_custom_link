@@ -41,6 +41,8 @@ typedef struct {
         int _fd;
 #endif
     };
+    int _fd_write;
+    int _fd_read;
 } _z_sys_net_socket_t;
 
 typedef struct {

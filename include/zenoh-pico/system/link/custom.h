@@ -29,7 +29,7 @@ typedef struct {
     _z_sys_net_endpoint_t _lep;
 } _z_custom_socket_t;
 
-int8_t _z_create_endpoint_custom(_z_sys_net_endpoint_t *ep, const char *s_address, const char *s_port);
+int8_t _z_create_endpoint_custom(_z_sys_net_socket_t *sock, const char *s_address, const char *s_port);
 void _z_free_endpoint_custom(_z_sys_net_endpoint_t *ep);
 
 // Unicast
